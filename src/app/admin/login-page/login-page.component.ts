@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../shared/interfaces";
 import {AuthService} from "../shared/services/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
@@ -23,11 +23,12 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
 
     /** попытка пойти на урл без авторизации */
-    this.route.queryParams.subscribe(params => {
-      console.log(params.loginAgain);
+    this.route.queryParams.subscribe((params: Params) => {
       if(params.loginAgain) {
-        console.log('loginAgain',params.loginAgain);
-        this.authService.setAuthError('Где авторизация <img src="https://cs7.pikabu.ru/images/big_size_comm/2018-09_4/1537425290182481988.jpg"> ?!');
+        this.authService.setAuthError('Где авторизация <img src="https://sun9-47.userapi.com/c849428/v849428497/82739/NoZWFOOK8Xc.jpg"> ?!');
+      }
+      if(params.authFailed){
+        this.authService.setAuthError('<img src="https://media0.giphy.com/media/wYyTHMm50f4Dm/giphy.gif">');
       }
     });
 
@@ -61,17 +62,4 @@ export class LoginPageComponent implements OnInit {
       this.submitted = false;
     })
   }
-
-  // ngAfterViewInit(): void {
-  //
-  //   console.log('ngAfterContentChecked');
-  //   /** попытка пойти на урл без авторизации */
-  //   this.route.queryParams.subscribe(params => {
-  //     console.log(params.loginAgain);
-  //     if(params.loginAgain) {
-  //       console.log('loginAgain',params.loginAgain);
-  //       this.authService.error$.next('Где авторизация <img src="https://cs7.pikabu.ru/images/big_size_comm/2018-09_4/1537425290182481988.jpg"> ?!');
-  //     }
-  //   });
-  // }
 }

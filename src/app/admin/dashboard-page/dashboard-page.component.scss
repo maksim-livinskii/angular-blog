@@ -1,0 +1,7 @@
+table{
+  tr{
+    td:last-of-type *{
+      margin: 0 10px;
+    }
+  }
+}
