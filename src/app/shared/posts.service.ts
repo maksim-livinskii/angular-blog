@@ -24,19 +24,27 @@ export class PostsService {
       )
   }
 
-  delete(id:string):Observable<void>{
-    return  this.http.delete<void>(`${environment.fb_db_link}/posts/${id}.json`)
+  update(postId, data):Observable<object>{
+    return this.http.patch(`${environment.fb_db_link}/posts/${postId}.json`,data)
       .pipe(
-        tap(()=>{
-          console.log(id);
+        map(()=>{
+          return  {
+            // ...data,
+            id: postId,
+            // date: new Date(data.date)
+          }
         })
-      );
+      )
+  }
+
+  delete(id:string):Observable<void>{
+    return  this.http.delete<void>(`${environment.fb_db_link}/posts/${id}.json`);
   }
 
   getPosts():Observable<Post[]>{
     return this.http.get(`${environment.fb_db_link}/posts.json`)
       .pipe(
-        delay(1000),
+        delay(500),
         map((response:{[key:string]:any})=>{
           if(response){
             return Object.keys(response)
@@ -48,6 +56,18 @@ export class PostsService {
           }
 
           return [];
+        })
+      )
+  }
+
+  getById(id: string):Observable<Post>{
+    return this.http.get<Post>(`${environment.fb_db_link}/posts/${id}.json`)
+      .pipe(
+        map((post:Post)=>{
+          return  {
+            id,
+            ...post
+          }
         })
       )
   }

@@ -1,0 +1,13 @@
+<div class="alert-wrap" *ngIf="alerts.length">
+  <div class="alert"
+      *ngFor="let alert of alerts"
+      [ngClass]="{
+        'alert-success': alert.type === alertTypes.Success,
+        'alert-primary': alert.type === alertTypes.Warning,
+        'alert-danger': alert.type === alertTypes.Error,
+        'alert-dark': alert.type === alertTypes.Info
+      }"
+  >
+    <p>{{alert.text}}</p>
+  </div>
+</div>

@@ -20,3 +20,14 @@ export interface Post {
 export interface FbCreateResponse {
   name: string
 }
+
+export type AlertTypes = 0 | 1 | 2 | 3;
+
+export enum ALERT_TYPES {
+  Success,
+  Warning,
+  Error,
+  Info
+}
+
+

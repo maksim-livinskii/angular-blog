@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, Provider} from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "./shared/shared.module";
 import {AuthInterceptor} from "./shared/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import { environment } from '../environments/environment';
 
 /** регистрация интерсепторов */
 
@@ -33,7 +35,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     INTERCEPTOR_PROVIDER

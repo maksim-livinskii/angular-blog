@@ -1,1 +1,33 @@
-<p>edit-page works!</p>
+
+<form *ngIf="form; else loader" [formGroup]="form" (ngSubmit)="updatePost()">
+  <h1>Редактировать пост</h1>
+
+  <div
+    [ngClass]="{invalid: form.get('title').invalid && form.get('title').touched}"
+    class="form-control"
+  >
+    <label for="title">Заголовок:</label>
+    <input type="text" id="title" formControlName="title">
+    <div
+      *ngIf="form.get('title').invalid && form.get('title').touched"
+      class="validation">
+      <small *ngIf="form.get('title').errors.required">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label>Контент:</label>
+    <quill-editor formControlName="content"></quill-editor>
+  </div>
+
+  <button
+    class="btn btn-block btn-dark"
+    type="submit"
+    [disabled]="form.invalid || submited">Отправить</button>
+</form>
+
+<ng-template #loader class="text-center">
+  <svg xmlns="http://www.w3.org/2000/svg" class="lds-bricks" preserveAspectRatio="xMidYMid" viewBox="0 0 100 100"><rect width="30" height="30" x="15" y="55" fill="#112cec" rx="3" ry="3"><animate attributeName="x" begin="-1.925s" calcMode="linear" dur="2.1" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" repeatCount="indefinite" values="15;55;55;55;55;15;15;15;15"/><animate attributeName="y" begin="-1.4s" calcMode="linear" dur="2.1" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" repeatCount="indefinite" values="15;55;55;55;55;15;15;15;15"/></rect><rect width="30" height="30" x="55" y="55" fill="#23fd52" rx="3" ry="3"><animate attributeName="x" begin="-1.225s" calcMode="linear" dur="2.1" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" repeatCount="indefinite" values="15;55;55;55;55;15;15;15;15"/><animate attributeName="y" begin="-0.7s" calcMode="linear" dur="2.1" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" repeatCount="indefinite" values="15;55;55;55;55;15;15;15;15"/></rect><rect width="30" height="30" x="16.7" y="15" fill="#ff6a6a" rx="3" ry="3"><animate attributeName="x" begin="-0.525s" calcMode="linear" dur="2.1" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" repeatCount="indefinite" values="15;55;55;55;55;15;15;15;15"/><animate attributeName="y" begin="0s" calcMode="linear" dur="2.1" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" repeatCount="indefinite" values="15;55;55;55;55;15;15;15;15"/></rect></svg>
+</ng-template>
