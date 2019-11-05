@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
-import {Post} from "../shared/interfaces";
+import {Post} from "../../../shared/interfaces";
 import {switchMap} from "rxjs/operators";
-import {PostsService} from "../shared/posts.service";
+import {PostsService} from "../../services/posts.service";
 
 @Component({
-  selector: 'app-post-page',
-  templateUrl: './post-page.component.html',
-  styleUrls: ['./post-page.component.scss']
+  selector: 'app-view-page',
+  templateUrl: './post-view.component.html',
+  styleUrls: ['./post-view.component.scss']
 })
-export class PostPageComponent implements OnInit {
+export class PostViewComponent implements OnInit {
 
   public post:Post;
 

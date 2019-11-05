@@ -1,33 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {NgModule, Provider} from '@angular/core';
+import {NgModule} from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { PostPageComponent } from './post-page/post-page.component';
 import { PostComponent } from './shared/components/post/post.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "./shared/shared.module";
-import {AuthInterceptor} from "./shared/auth.interceptor";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import { environment } from '../environments/environment';
+import {PostModule} from "./post/post.module";
 
-/** регистрация интерсепторов */
 
-const INTERCEPTOR_PROVIDER: Provider = {
-  provide: HTTP_INTERCEPTORS,
-  multi: true,
-  useClass: AuthInterceptor
-};
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent,
     HomePageComponent,
-    PostPageComponent,
     PostComponent
   ],
   imports: [
@@ -36,10 +27,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    PostModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-  ],
-  providers: [
-    INTERCEPTOR_PROVIDER
   ],
   bootstrap: [AppComponent]
 })

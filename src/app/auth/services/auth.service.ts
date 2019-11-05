@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {FbAuthResponse, User} from "../../../shared/interfaces";
+import {FbAuthResponse, User} from "../../shared/interfaces";
 import {Observable, BehaviorSubject, throwError} from "rxjs";
-import {environment} from "../../../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
