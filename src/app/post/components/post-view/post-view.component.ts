@@ -1,8 +1,9 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
-import {Post} from "../../../shared/interfaces";
-import {switchMap} from "rxjs/operators";
-import {PostsService} from "../../services/posts.service";
+import { ActivatedRoute, Params } from "@angular/router";
+import { Post } from "../../../shared/interfaces";
+import { switchMap, filter } from "rxjs/operators";
+import { PostsService } from "../../services/posts.service";
 
 @Component({
   selector: 'app-view-page',
@@ -11,19 +12,15 @@ import {PostsService} from "../../services/posts.service";
 })
 export class PostViewComponent implements OnInit {
 
-  public post:Post;
+  public post$: Observable<Post>;
 
   constructor(private route: ActivatedRoute, private postsService: PostsService) { }
 
   ngOnInit() {
-    this.route.params.pipe(
-      switchMap(
-        (params: Params) => {
-          return this.postsService.getById(params.id)
-        })
-    ).subscribe((post: Post)=>{
-      this.post = post;
-    });
+    this.post$ = this.route.params.pipe(
+      filter(params => params.id),
+      switchMap(params => this.postsService.getById(params.id))
+    )
   }
 
 }

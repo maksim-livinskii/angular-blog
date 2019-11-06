@@ -1,18 +1,13 @@
-<form [formGroup]="form" (ngSubmit)="upsetrPost()">
+<form [formGroup]="form" (ngSubmit)="submitForm()">
   <h1 *ngIf="!form.get('id').value;else anotherTitle">Новый пост</h1>
   <ng-template #anotherTitle>
     <h1>Редактировать пост</h1>
   </ng-template>
 
-  <div
-    [ngClass]="{invalid: form.get('title').invalid && form.get('title').touched}"
-    class="form-control"
-  >
+  <div [ngClass]="{invalid: form.get('title').invalid && form.get('title').touched}" class="form-control">
     <label for="title">Заголовок:</label>
     <input type="text" id="title" formControlName="title">
-    <div
-      *ngIf="form.get('title').invalid && form.get('title').touched"
-      class="validation">
+    <div *ngIf="form.get('title').invalid && form.get('title').touched" class="validation">
       <small *ngIf="form.get('title').errors.required">
         Поле обязательно для заполнения
       </small>
@@ -24,27 +19,16 @@
     <quill-editor formControlName="content"></quill-editor>
   </div>
 
-  <div
-    *ngIf="!form.get('id').value"
-    [ngClass]="{invalid: form.get('author').invalid && form.get('author').touched}"
-    class="form-control"
-  >
+  <div *ngIf="!form.get('id').value" [ngClass]="{invalid: form.get('author').invalid && form.get('author').touched}"
+    class="form-control">
     <label for="author">Автор:</label>
     <input type="text" id="author" formControlName="author">
-    <div
-      *ngIf="form.get('author').invalid && form.get('author').touched"
-      class="validation">
+    <div *ngIf="form.get('author').invalid && form.get('author').touched" class="validation">
       <small *ngIf="form.get('author').errors.required">
         Поле обязательно для заполнения
       </small>
     </div>
   </div>
 
-  <input *ngIf="form.get('id').value" type="hidden" formControlName="id">
-  <input *ngIf="form.get('date').value" type="hidden" formControlName="date">
-
-  <button
-    class="btn btn-block btn-dark"
-    type="submit"
-    [disabled]="form.invalid || submited">Отправить</button>
+  <button class="btn btn-block btn-dark" type="submit" [disabled]="form.invalid || submited">Отправить</button>
 </form>

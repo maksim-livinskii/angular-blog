@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {iif, Subscription} from "rxjs";
-import {PostsService} from "../../services/posts.service";
-import {AlertService} from "../../../admin/shared/services/alert.service";
-import {Post} from "../../../shared/interfaces";
-import {ActivatedRoute, Params} from "@angular/router";
-import {filter, map, switchMap, tap} from "rxjs/operators";
-import {placeholdersToParams} from "@angular/compiler/src/render3/view/i18n/util";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { iif, Subscription, Subject } from "rxjs";
+import { PostsService } from "../../services/posts.service";
+import { AlertService } from "../../../admin/shared/services/alert.service";
+import { Post } from "../../../shared/interfaces";
+import { ActivatedRoute, Params } from "@angular/router";
+import { filter, map, switchMap, tap, takeUntil, finalize } from "rxjs/operators";
+import { placeholdersToParams } from "@angular/compiler/src/render3/view/i18n/util";
 
 @Component({
   selector: 'app-post-upsert',
@@ -17,7 +17,7 @@ export class PostUpsertComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   submited = false;
-  sub: Subscription;
+  unsubscribe$ = new Subject();
 
   constructor(
     private route: ActivatedRoute,
@@ -29,15 +29,18 @@ export class PostUpsertComponent implements OnInit, OnDestroy {
       title: ['', [Validators.required]],
       content: ['', [Validators.required]],
       author: ['', [Validators.required]],
-      date: ['']
+      date: []
     });
 
   }
 
   ngOnInit() {
-    this.sub = this.route.params.pipe(
-      filter(params=>params.id),
-      switchMap(params=> this.postsService.getById(params.id))
+    this.route.params.pipe(
+      takeUntil(this.unsubscribe$),
+      filter(params => params.id),
+      switchMap(params => this.postsService.getById(params.id).pipe(
+        map(post => ({ ...post, id: params.id })))
+      )
     ).subscribe((post: Post) => {
       this.form.setValue(post);
     });
@@ -45,50 +48,29 @@ export class PostUpsertComponent implements OnInit, OnDestroy {
 
   }
 
-  private addPost() {
-    this.submited = true;
+  submitForm() {
+    if (this.form.invalid) return;
 
-    const post: Post = {
-      ...this.form.value,
-      date: new Date()
-    };
-
-    this.sub = this.postsService.create(post)
-      .subscribe(post=>{
-        this.form.reset();
+    this.submitMethod(this.form.getRawValue())
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        finalize(() => this.submited = false)
+      ).subscribe(() => {
         this.submited = false;
-        this.alertService.success('Пост создан');
-      })
-  }
-
-  private updatePost() {
-    this.submited = true;
-
-    const data = {
-      title: this.form.value.title,
-      content: this.form.value.content
-    };
-
-    this.sub = this.postsService.update(this.form.get('id').value,data)
-      .subscribe(post=>{
-        this.submited = false;
-        this.alertService.success('Пост изменен');
+        this.alertService.success(`Пост ${(this.form.get('id').value) ? 'Изменен' : 'Создан'}`);
       });
+
   }
 
-  upsetrPost() {
-    if(this.form.invalid) return;
-
-    if(this.form.get('id').value){
-      this.updatePost();
-    }
-    else{
-      this.addPost();
-    }
+  private submitMethod(post: Post) {
+    return post.id ?
+      this.postsService.update(post) :
+      this.postsService.create(post);
   }
 
   ngOnDestroy(): void {
-    if(this.sub) this.sub.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 
