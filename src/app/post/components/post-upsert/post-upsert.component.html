@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="upsetrPost()">
+<form [formGroup]="form" (ngSubmit)="submitPost()">
   <h1 *ngIf="!form.get('id').value;else anotherTitle">Новый пост</h1>
   <ng-template #anotherTitle>
     <h1>Редактировать пост</h1>
@@ -39,9 +39,6 @@
       </small>
     </div>
   </div>
-
-  <input *ngIf="form.get('id').value" type="hidden" formControlName="id">
-  <input *ngIf="form.get('date').value" type="hidden" formControlName="date">
 
   <button
     class="btn btn-block btn-dark"
