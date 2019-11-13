@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PostsService} from "../../post/services/posts.service";
-import {Subscription} from "rxjs";
+import {Subject} from "rxjs";
 import {Post} from "../../shared/interfaces";
 import {AlertService} from "../shared/services/alert.service";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,9 +13,8 @@ import {AlertService} from "../shared/services/alert.service";
 export class DashboardPageComponent implements OnInit, OnDestroy {
 
   posts: Post[];
-  pSub: Subscription;
-  dSub: Subscription;
   searchStr = '';
+  unsub$ = new Subject();
 
   constructor(
     private postsService: PostsService,
@@ -22,11 +22,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.pSub = this.postsService.getPosts().subscribe(posts => this.posts = posts);
+    this.postsService.getPosts().pipe(
+      takeUntil(this.unsub$)
+    )
+      .subscribe(posts => this.posts = posts);
   }
 
   remove(id: string) {
-    this.dSub = this.postsService.delete(id)
+    this.postsService.delete(id).pipe(
+      takeUntil(this.unsub$)
+    )
       .subscribe(()=>{
         this.posts.splice(this.posts.findIndex(post => post.id == id), 1);
         this.alertService.warning(`Пост удален`);
@@ -34,7 +39,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.pSub) this.pSub.unsubscribe();
-    if(this.dSub) this.dSub.unsubscribe();
+    this.unsub$.next();
+    this.unsub$.complete();
   }
 }
