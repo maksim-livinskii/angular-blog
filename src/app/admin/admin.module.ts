@@ -11,7 +11,6 @@ import { AlertComponent } from './shared/components/alert/alert.component';
 import {AlertService} from "./shared/services/alert.service";
 import {PostModule} from "../post/post.module";
 import {PostUpsertComponent} from "../post/components/post-upsert/post-upsert.component";
-import {AuthModule} from "../auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import {AuthModule} from "../auth/auth.module";
   ],
   imports: [
     CommonModule,
-    AuthModule,
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, canActivate: [AuthGuard], children: [

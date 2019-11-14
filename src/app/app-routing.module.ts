@@ -3,6 +3,7 @@ import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 import {MainLayoutComponent} from "./main-layout/main-layout.component";
 import {HomePageComponent} from "./home-page/home-page.component";
 import {PostViewComponent} from "./post/components/post-view/post-view.component";
+import {Page404Component} from "./shared/components/page404/page404.component";
 
 
 const routes: Routes = [
@@ -12,7 +13,9 @@ const routes: Routes = [
       {path: 'post/:id', component: PostViewComponent},
       {path: 'auth', loadChildren: './auth/auth.module#AuthModule'}
     ]},
-  {path: 'admin', loadChildren: './admin/admin.module#AdminModule'}
+  {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
+  {path: '404', component: Page404Component},
+  {path: '**', redirectTo: '/404'}
 ];
 
 @NgModule({

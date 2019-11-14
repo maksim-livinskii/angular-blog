@@ -11,6 +11,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "./shared/shared.module";
 import { environment } from '../environments/environment';
 import {PostModule} from "./post/post.module";
+import {AuthModule} from "./auth/auth.module";
 
 
 
@@ -28,6 +29,7 @@ import {PostModule} from "./post/post.module";
     ReactiveFormsModule,
     SharedModule,
     PostModule,
+    AuthModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent]
