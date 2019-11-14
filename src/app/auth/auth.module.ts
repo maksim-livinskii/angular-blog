@@ -5,6 +5,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./services/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthGuard} from "./services/auth.guard";
+import {RouterModule} from "@angular/router";
 
 /** регистрация интерсепторов */
 
@@ -21,7 +22,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forChild([
+      {path: '', redirectTo: '/auth/login', pathMatch: 'full'},
+      {path: 'login', component: LoginFormComponent}
+    ])
   ],
   providers: [
     INTERCEPTOR_PROVIDER,

@@ -9,10 +9,9 @@ import {AuthGuard} from "../auth/services/auth.guard";
 import {SearchPipe} from "./shared/search.pipe";
 import { AlertComponent } from './shared/components/alert/alert.component';
 import {AlertService} from "./shared/services/alert.service";
-import {AuthModule} from "../auth/auth.module";
-import {LoginFormComponent} from "../auth/login-form/login-form.component";
 import {PostModule} from "../post/post.module";
 import {PostUpsertComponent} from "../post/components/post-upsert/post-upsert.component";
+import {AuthModule} from "../auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -23,11 +22,11 @@ import {PostUpsertComponent} from "../post/components/post-upsert/post-upsert.co
   ],
   imports: [
     CommonModule,
+    AuthModule,
     RouterModule.forChild([
       {
-        path: '', component: AdminLayoutComponent, children: [
-          {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
-          {path: 'login', component: LoginFormComponent},
+        path: '', component: AdminLayoutComponent, canActivate: [AuthGuard], children: [
+          {path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'},
           {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
           {path: 'create', component: PostUpsertComponent, canActivate: [AuthGuard]},
           {path: 'post/:id/edit', component: PostUpsertComponent, canActivate: [AuthGuard]}
@@ -37,13 +36,11 @@ import {PostUpsertComponent} from "../post/components/post-upsert/post-upsert.co
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    AuthModule,
     PostModule
   ],
   providers:[
     AlertService
-  ],
-  exports: [RouterModule]
+  ]
 })
 export class AdminModule {
 

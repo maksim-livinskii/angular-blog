@@ -9,7 +9,8 @@ const routes: Routes = [
   {path: '', component: MainLayoutComponent, children: [
       {path: '', redirectTo: '/', pathMatch: 'full'}, // редирект на корневой элемент для корректного отображения компонента
       {path: '', component: HomePageComponent},
-      {path: 'post/:id', component: PostViewComponent}
+      {path: 'post/:id', component: PostViewComponent},
+      {path: 'auth', loadChildren: './auth/auth.module#AuthModule'}
     ]},
   {path: 'admin', loadChildren: './admin/admin.module#AdminModule'}
 ];
