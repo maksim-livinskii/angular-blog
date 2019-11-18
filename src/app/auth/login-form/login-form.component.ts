@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../shared/interfaces";
 import {AuthService} from "../services/auth.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-login-form',
@@ -13,6 +14,7 @@ export class LoginFormComponent implements OnInit {
 
   submitted = false;
   form: FormGroup;
+  public registration = false;
 
   constructor(
     public authService: AuthService,
@@ -21,6 +23,8 @@ export class LoginFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    if(this.authService.isAuthenticated()) this.router.navigate(['/']);
 
     /** попытка пойти на урл без авторизации */
     this.route.queryParams.subscribe((params: Params) => {
@@ -44,6 +48,16 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  private authMethod(user):Observable<any>{
+    if(this.registration){
+      return this.authService.singUp(user);
+    }
+    else{
+      console.log(333);
+      return this.authService.login(user);
+    }
+  }
+
   submitForm() {
     if(this.form.invalid) return;
 
@@ -54,9 +68,12 @@ export class LoginFormComponent implements OnInit {
       password: this.form.value.password
     };
 
-    this.authService.login(user).subscribe(()=>{
+    console.log(123);
+
+    this.authMethod(user).subscribe(()=>{
+      console.log(222);
       this.form.reset();
-      this.router.navigate(['/admin', 'dashboard']);
+      this.router.navigate(['/']);
       this.submitted = false;
     }, ()=>{
       this.submitted = false;

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {FbAuthResponse, User} from "../../shared/interfaces";
-import {Observable, BehaviorSubject, throwError} from "rxjs";
+import {Observable, BehaviorSubject, throwError, Subject} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {catchError, tap} from "rxjs/operators";
 
@@ -11,6 +11,7 @@ import {catchError, tap} from "rxjs/operators";
 export class AuthService {
 
   public error$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public authStatus$: Subject<boolean> = new Subject<boolean>();
 
   get token(): string{
     const expDate = new Date(localStorage.getItem('fb-token-exp'));
@@ -34,14 +35,21 @@ export class AuthService {
       )
   }
 
-  setAuthError(message){
-    console.log(message);
+  singUp(user: User):Observable<any>{
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.apiKey}`,user)
+      .pipe(
+        tap(this.setToken),
+        catchError(this.handleError.bind(this))
+      )
+  }
 
+  setAuthError(message){
     this.error$.next(message);
   }
 
   private handleError(error: HttpErrorResponse){
     const {message} = error.error.error;
+
     console.log(message);
 
     switch (message) {
@@ -53,6 +61,9 @@ export class AuthService {
         break;
       case 'INVALID_EMAIL':
         this.error$.next('Неверный email');
+        break;
+      case 'EMAIL_EXISTS' :
+        this.error$.next('Этот email уже зарегистрирован');
         break;
       default:
         break;
@@ -74,9 +85,11 @@ export class AuthService {
       const expData = new Date(new Date().getTime() + +response.expiresIn * 1000);
       localStorage.setItem('fb-token', response.idToken);
       localStorage.setItem('fb-token-exp', expData.toString());
+      this.authStatus$.next(true);
     }
     else {
       localStorage.clear();
+      this.authStatus$.next(false);
     }
   }
 }

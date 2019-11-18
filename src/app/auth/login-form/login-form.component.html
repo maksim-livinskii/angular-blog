@@ -7,12 +7,6 @@
   >
   </div>
 
-<!--  <div-->
-<!--    *ngIf="route.queryParams | async as params && params"-->
-<!--    class="alert alert-danger">-->
-<!--    Где авторизация ****?!-->
-<!--  </div>-->
-
   <div
     [ngClass]="{invalid: form.get('email').invalid && form.get('email').touched}"
     class="form-control"
@@ -49,5 +43,9 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Войти</button>
+  <div class="btns-horizontal">
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Войти</button>
+    <span>или</span>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted" (click)="registration=true">Зарегистрироваться</button>
+  </div>
 </form>

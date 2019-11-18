@@ -1,4 +1,13 @@
 form{
   max-width: 600px;
   margin: 0 auto;
+
+  .btns-horizontal{
+    display: flex;
+    justify-content: space-between;
+
+    .btn{
+      margin-right: 0;
+    }
+  }
 }

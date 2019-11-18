@@ -18,7 +18,6 @@ export class AuthInterceptor implements HttpInterceptor{
           auth: this.authService.token
         }
       });
-
     }
 
     return next.handle(req)
