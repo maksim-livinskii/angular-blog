@@ -1,9 +1,9 @@
 <nav class="navbar main">
   <h1>Angular Blog</h1>
-<!--  <a (click)="logout()" *ngIf="authService.authStatus$ | async; else login">Выйти</a>-->
-<!--  <ng-template #login>-->
-<!--    <a routerLink="auth/login">Войти</a>-->
-<!--  </ng-template>-->
+  <a (click)="logout()" *ngIf="authStatus$ | async; else login">Выйти</a>
+  <ng-template #login>
+    <a routerLink="auth/login">Войти</a>
+  </ng-template>
 </nav>
 
 <div class="container">

@@ -53,7 +53,6 @@ export class LoginFormComponent implements OnInit {
       return this.authService.singUp(user);
     }
     else{
-      console.log(333);
       return this.authService.login(user);
     }
   }
@@ -68,10 +67,7 @@ export class LoginFormComponent implements OnInit {
       password: this.form.value.password
     };
 
-    console.log(123);
-
     this.authMethod(user).subscribe(()=>{
-      console.log(222);
       this.form.reset();
       this.router.navigate(['/']);
       this.submitted = false;

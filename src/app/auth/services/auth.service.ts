@@ -11,7 +11,7 @@ import {catchError, tap} from "rxjs/operators";
 export class AuthService {
 
   public error$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  public authStatus$: Subject<boolean> = new Subject<boolean>();
+  public authStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   get token(): string{
     const expDate = new Date(localStorage.getItem('fb-token-exp'));
@@ -30,7 +30,7 @@ export class AuthService {
     user.returnSecureToken = true;
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
       .pipe(
-        tap(this.setToken),
+        tap((res:FbAuthResponse)=>this.setToken(res)),
         catchError(this.handleError.bind(this))
       )
   }
@@ -38,7 +38,7 @@ export class AuthService {
   singUp(user: User):Observable<any>{
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.apiKey}`,user)
       .pipe(
-        tap(this.setToken),
+        tap((res:FbAuthResponse)=>this.setToken(res)),
         catchError(this.handleError.bind(this))
       )
   }
