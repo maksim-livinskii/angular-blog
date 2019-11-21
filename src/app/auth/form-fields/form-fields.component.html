@@ -1,0 +1,63 @@
+
+<form class="card" [formGroup]="form" (ngSubmit)="submitForm()">
+<div
+  [ngClass]="{invalid: form.get('email').invalid && form.get('email').touched}"
+  class="form-group"
+>
+  <label for="email">Email:</label>
+  <input type="email" id="email" class="form-control" formControlName="email">
+  <div
+    *ngIf="form.get('email').invalid && form.get('email').touched"
+    class="form-text text-danger">
+    <small *ngIf="form.get('email').errors.required">
+      Поле обязательно для заполнения
+    </small>
+    <small *ngIf="form.get('email').errors.email">
+      Введен некорректный email
+    </small>
+  </div>
+</div>
+
+<div
+  [ngClass]="{invalid: form.get('password').invalid && form.get('password').touched}"
+  class="form-group">
+  <label for="password">Пароль:</label>
+  <input type="password" id="password" class="form-control" formControlName="password">
+  <div
+    *ngIf="form.get('password').invalid && form.get('password').touched"
+    class="form-text text-danger">
+    <small *ngIf="form.get('password').errors.required">
+      Поле обязательно для заполнения
+    </small>
+
+    <small *ngIf="form.get('password').errors.minlength">
+      Минимальная длина пароля - {{form.get('password').errors.minlength.requiredLength}}, введено символов - {{form.get('password').errors.minlength.actualLength}}
+    </small>
+  </div>
+</div>
+
+  <div
+    *ngIf="registration && form.get('name') != undefined"
+    [ngClass]="{invalid: form.get('name').invalid && form.get('name').touched}"
+    class="form-group">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" class="form-control" formControlName="name">
+    <div
+      *ngIf="form.get('name').invalid && form.get('name').touched"
+      class="form-text text-danger">
+      <small *ngIf="form.get('name').errors.required">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+  </div>
+
+<div class="btns-horizontal">
+  <button type="submit" class="btn btn-primary"
+          [disabled]="form.invalid || submitted"
+          *ngIf="registration; else login"
+  >Зарегистрироваться</button>
+  <ng-template #login>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Войти</button>
+  </ng-template>
+</div>
+</form>

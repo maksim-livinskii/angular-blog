@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import "~bootstrap/scss/bootstrap";
 @import "~quill/dist/quill.core.css";
 @import "~quill/dist/quill.snow.css";
 
@@ -211,9 +212,9 @@ img {
 }
 
 .form-control {
-  display: block;
-  color: #888;
-  margin-bottom: .8rem;
+  //display: block;
+  //color: #888;
+  //margin-bottom: .8rem;
 
   &.invalid {
     color: var(--primary-color);

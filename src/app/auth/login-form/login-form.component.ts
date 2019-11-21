@@ -4,6 +4,7 @@ import {User, UserRequest} from "../../shared/interfaces";
 import {AuthService} from "../services/auth.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {NgbTabChangeEvent} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-login-form',
@@ -82,6 +83,19 @@ export class LoginFormComponent implements OnInit {
     }
     else{
       this.router.navigate(['/user']);
+    }
+  }
+
+  test(event:NgbTabChangeEvent) {
+    if(event.nextId == 'tab-reg'){
+      this.registration = true;
+      this.form.addControl('name', new FormControl('', [
+        Validators.required
+      ]));
+    }
+    else {
+      this.registration = false;
+      this.form.removeControl('name');
     }
   }
 }

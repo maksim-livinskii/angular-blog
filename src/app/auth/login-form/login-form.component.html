@@ -1,51 +1,13 @@
-<form class="card" [formGroup]="form" (ngSubmit)="submitForm()">
-  <h2>Авторизация</h2>
-  <div
-    *ngIf="authService.error$ | async as error"
-    class="alert alert-danger"
-    [innerHTML]="error"
-  >
-  </div>
 
-  <div
-    [ngClass]="{invalid: form.get('email').invalid && form.get('email').touched}"
-    class="form-control"
-  >
-    <label for="email">Email:</label>
-    <input type="email" id="email" formControlName="email">
-    <div
-      *ngIf="form.get('email').invalid && form.get('email').touched"
-      class="validation">
-      <small *ngIf="form.get('email').errors.required">
-        Поле обязательно для заполнения
-      </small>
-      <small *ngIf="form.get('email').errors.email">
-        Введен некорректный email
-      </small>
-    </div>
-  </div>
-
-  <div
-    [ngClass]="{invalid: form.get('password').invalid && form.get('password').touched}"
-    class="form-control">
-    <label for="password">Пароль:</label>
-    <input type="password" id="password" formControlName="password">
-    <div
-      *ngIf="form.get('password').invalid && form.get('password').touched"
-      class="validation">
-      <small *ngIf="form.get('password').errors.required">
-        Поле обязательно для заполнения
-      </small>
-
-      <small *ngIf="form.get('password').errors.minlength">
-        Минимальная длина пароля - {{form.get('password').errors.minlength.requiredLength}}, введено символов - {{form.get('password').errors.minlength.actualLength}}
-      </small>
-    </div>
-  </div>
-
-  <div class="btns-horizontal">
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Войти</button>
-    <span>или</span>
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted" (click)="registration=true">Зарегистрироваться</button>
-  </div>
-</form>
+<ngb-tabset justify="justified" (tabChange)="test($event)">
+  <ngb-tab title="Авторизация" id="tab-login">
+    <ng-template ngbTabContent>
+      <app-form-fields [authService]="authService" [form]="form" [registration]="registration" [submitted]="submitted" (submit)="submitForm()"></app-form-fields>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Регистрация" id="tab-reg">
+    <ng-template ngbTabContent>
+      <app-form-fields [authService]="authService" [form]="form" [registration]="registration" [submitted]="submitted" (submit)="submitForm()"></app-form-fields>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

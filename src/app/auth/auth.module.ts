@@ -6,6 +6,8 @@ import {AuthInterceptor} from "./services/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthGuard} from "./services/auth.guard";
 import {RouterModule} from "@angular/router";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { FormFieldsComponent } from './form-fields/form-fields.component';
 
 /** регистрация интерсепторов */
 
@@ -17,12 +19,14 @@ const INTERCEPTOR_PROVIDER: Provider = {
 
 @NgModule({
   declarations: [
-    LoginFormComponent
+    LoginFormComponent,
+    FormFieldsComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     RouterModule.forChild([
       {path: '', redirectTo: '/auth/login', pathMatch: 'full'},
       {path: 'login', component: LoginFormComponent}
