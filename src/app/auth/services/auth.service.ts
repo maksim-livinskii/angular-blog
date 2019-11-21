@@ -5,7 +5,7 @@ import {Observable, BehaviorSubject, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {catchError, map, switchMap, tap} from "rxjs/operators";
 import {UserService} from "../../user/services/user.service";
-import {Router} from "@angular/router";
+import {AlertService} from "../../shared/services/alert.service";
 
 @Injectable({
   providedIn: "root"
@@ -26,19 +26,16 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private router: Router
+    private alert: AlertService
   ){}
 
   login(user: UserRequest):Observable<any>{
     user.returnSecureToken = true;
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
       .pipe(
-        tap((res:FbAuthResponse)=> {
-            this.setToken(res);
-          }
-        ),
-        switchMap((res:FbAuthResponse)=>{
-          return this.userService.getInformationByUserId(res.localId);
+        tap((res:FbAuthResponse) => {
+          this.setToken(res);
+          this.alert.success('Вы вошли!');
         }),
         catchError(this.handleError.bind(this))
       )
@@ -49,11 +46,12 @@ export class AuthService {
       .pipe(
         tap((res:FbAuthResponse)=>this.setToken(res)),
         map((res:FbAuthResponse)=>{
-          return {id:res.localId, email: user.email, name: ''};
+          return {id:res.localId, email: user.email, name: user.name};
         }),
         switchMap((user:User)=>{
           return this.userService.saveInformation(user);
         }),
+        tap(()=>this.alert.success('Вы зарегистрировались и вошли!')),
         catchError(this.handleError.bind(this))
       )
   }

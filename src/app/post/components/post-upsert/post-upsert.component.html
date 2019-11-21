@@ -6,20 +6,20 @@
 
   <div
     [ngClass]="{invalid: form.get('title').invalid && form.get('title').touched}"
-    class="form-control"
+    class="form-group"
   >
     <label for="title">Заголовок:</label>
     <input type="text" id="title" formControlName="title">
     <div
       *ngIf="form.get('title').invalid && form.get('title').touched"
-      class="validation">
+      class="validation text-danger">
       <small *ngIf="form.get('title').errors.required">
         Поле обязательно для заполнения
       </small>
     </div>
   </div>
 
-  <div class="form-control">
+  <div class="form-group">
     <label>Контент:</label>
     <quill-editor formControlName="content"></quill-editor>
   </div>
@@ -27,13 +27,13 @@
   <div
     *ngIf="!form.get('id').value"
     [ngClass]="{invalid: form.get('author').invalid && form.get('author').touched}"
-    class="form-control"
+    class="form-group"
   >
     <label for="author">Автор:</label>
     <input type="text" id="author" formControlName="author">
     <div
       *ngIf="form.get('author').invalid && form.get('author').touched"
-      class="validation">
+      class="validation text-danger">
       <small *ngIf="form.get('author').errors.required">
         Поле обязательно для заполнения
       </small>

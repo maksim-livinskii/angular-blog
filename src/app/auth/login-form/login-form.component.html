@@ -1,13 +1,8 @@
 
-<ngb-tabset justify="justified" (tabChange)="test($event)">
-  <ngb-tab title="Авторизация" id="tab-login">
-    <ng-template ngbTabContent>
-      <app-form-fields [authService]="authService" [form]="form" [registration]="registration" [submitted]="submitted" (submit)="submitForm()"></app-form-fields>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab title="Регистрация" id="tab-reg">
-    <ng-template ngbTabContent>
-      <app-form-fields [authService]="authService" [form]="form" [registration]="registration" [submitted]="submitted" (submit)="submitForm()"></app-form-fields>
-    </ng-template>
-  </ngb-tab>
+<ngb-tabset justify="justified" (tabChange)="changeTab($event)">
+  <ngb-tab title="Авторизация" id="tab-login"></ngb-tab>
+  <ngb-tab title="Регистрация" id="tab-reg"></ngb-tab>
 </ngb-tabset>
+
+<app-form-fields [isRegistration]="registration" (submitData)="submitForm($event)"></app-form-fields>
+

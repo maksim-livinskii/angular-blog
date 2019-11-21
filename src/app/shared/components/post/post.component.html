@@ -1,11 +1,10 @@
 <div class="card">
   <div class="card-header">
     <h2>{{post.title}}</h2>
-
-    <small>{{post.date | date:"dd.MM.yyyy"}}</small>
-  </div>
-  <div>
-    <small>{{post.author}}</small>
+    <div class="d-flex flex-column align-items-end">
+      <small>{{post.author}}</small>
+      <small>{{post.date | date:"dd.MM.yyyy"}}</small>
+    </div>
   </div>
 
   <button

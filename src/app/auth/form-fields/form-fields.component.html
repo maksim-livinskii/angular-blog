@@ -37,7 +37,7 @@
 </div>
 
   <div
-    *ngIf="registration && form.get('name') != undefined"
+    *ngIf="isRegistration && form.get('name') != undefined"
     [ngClass]="{invalid: form.get('name').invalid && form.get('name').touched}"
     class="form-group">
     <label for="name">Имя:</label>
@@ -54,7 +54,7 @@
 <div class="btns-horizontal">
   <button type="submit" class="btn btn-primary"
           [disabled]="form.invalid || submitted"
-          *ngIf="registration; else login"
+          *ngIf="isRegistration; else login"
   >Зарегистрироваться</button>
   <ng-template #login>
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Войти</button>

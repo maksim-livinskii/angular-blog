@@ -4,7 +4,7 @@ import {UserService} from "./services/user.service";
 import { UserPageComponent } from './user-page/user-page.component';
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AuthGuard} from "../auth/services/auth.guard";
+import {AuthGuard} from "../auth/guards/auth.guard";
 
 
 

@@ -8,7 +8,7 @@ import {SharedModule} from "../shared/shared.module";
 import {SearchPipe} from "./shared/search.pipe";
 import {PostModule} from "../post/post.module";
 import {PostUpsertComponent} from "../post/components/post-upsert/post-upsert.component";
-import {AdminGuard} from "./services/admin.guard";
+import {AdminGuard} from "./guards/admin.guard";
 
 @NgModule({
   declarations: [
