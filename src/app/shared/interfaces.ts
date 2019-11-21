@@ -1,4 +1,4 @@
-export interface User {
+export interface UserRequest {
   email: string
   password: string
   returnSecureToken?: boolean
@@ -7,6 +7,7 @@ export interface User {
 export interface FbAuthResponse {
   idToken: string
   expiresIn: string
+  localId: string
 }
 
 export interface Post {
@@ -15,6 +16,12 @@ export interface Post {
   content: string
   author: string
   date: Date
+}
+
+export interface User {
+  id: string
+  name?: string
+  email?: string
 }
 
 export interface FbCreateResponse {

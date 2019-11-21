@@ -11,7 +11,8 @@ const routes: Routes = [
       {path: '', redirectTo: '/', pathMatch: 'full'}, // редирект на корневой элемент для корректного отображения компонента
       {path: '', component: HomePageComponent},
       {path: 'post/:id', component: PostViewComponent},
-      {path: 'auth', loadChildren: './auth/auth.module#AuthModule'}
+      {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+      {path: 'user', loadChildren: './user/user.module#UserModule'}
     ]},
   {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
   {path: '404', component: Page404Component},

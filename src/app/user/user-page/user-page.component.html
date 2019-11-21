@@ -1,0 +1,22 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submitForm()">
+  <h2>Данные пользователя:</h2>
+
+  <div
+    [ngClass]="{invalid: form.get('name').invalid && form.get('name').touched}"
+    class="form-control"
+  >
+    <label for="name">Имя:</label>
+    <input type="text" id="name" formControlName="name">
+    <div
+      *ngIf="form.get('name').invalid && form.get('name').touched"
+      class="validation">
+      <small *ngIf="form.get('name').errors.required">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+  </div>
+
+  <div class="btns-horizontal">
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Сохранить</button>
+  </div>
+</form>

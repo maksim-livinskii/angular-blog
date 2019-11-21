@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AlertTypes, ALERT_TYPES} from "../../../../shared/interfaces";
 import {Alert, AlertService} from "../../services/alert.service";
 import {Subscription} from "rxjs";
+import {ALERT_TYPES} from "../../interfaces";
 
 @Component({
   selector: 'app-alert',

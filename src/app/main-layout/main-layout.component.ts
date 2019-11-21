@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth/services/auth.service";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main-layout',
@@ -9,15 +9,14 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
 })
 export class MainLayoutComponent implements OnInit {
 
-  public authStatus$: BehaviorSubject<boolean>;
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.authStatus$ = this.authService.authStatus$;
+
   }
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

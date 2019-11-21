@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PostsService} from "../../services/posts.service";
-import {AlertService} from "../../../admin/shared/services/alert.service";
 import {Post} from "../../../shared/interfaces";
 import {ActivatedRoute} from "@angular/router";
 import {filter, takeUntil, switchMap, map, finalize} from "rxjs/operators";
 import {placeholdersToParams} from "@angular/compiler/src/render3/view/i18n/util";
 import {Subject} from "rxjs";
+import {AlertService} from "../../../shared/services/alert.service";
 
 @Component({
   selector: 'app-post-upsert',

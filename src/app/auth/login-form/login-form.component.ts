@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../shared/interfaces";
+import {User, UserRequest} from "../../shared/interfaces";
 import {AuthService} from "../services/auth.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Observable} from "rxjs";
@@ -62,17 +62,26 @@ export class LoginFormComponent implements OnInit {
 
     this.submitted = true;
 
-    const user: User = {
+    const user: UserRequest = {
       email: this.form.value.email,
       password: this.form.value.password
     };
 
-    this.authMethod(user).subscribe(()=>{
-      this.form.reset();
-      this.router.navigate(['/']);
-      this.submitted = false;
+    this.authMethod(user).subscribe((data)=>{
+      this.postAuth(data);
+      // this.form.reset();
+      // this.submitted = false;
     }, ()=>{
       this.submitted = false;
     })
+  }
+
+  private postAuth(user:User){
+    if(user && user.name != undefined && user.name.length){
+      this.router.navigate(['/']);
+    }
+    else{
+      this.router.navigate(['/user']);
+    }
   }
 }

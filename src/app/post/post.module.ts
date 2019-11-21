@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../shared/shared.module";
 import {PostViewComponent} from "./components/post-view/post-view.component";
 import {RouterModule} from "@angular/router";
+import {AuthModule} from "../auth/auth.module";
 
 
 
@@ -19,7 +20,8 @@ import {RouterModule} from "@angular/router";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    AuthModule
   ],
   providers: [
     PostsService

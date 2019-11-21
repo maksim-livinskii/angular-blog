@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs";
-import {ALERT_TYPES, AlertTypes} from "../../../shared/interfaces";
+import {ALERT_TYPES, AlertTypes} from "../interfaces";
 
 export interface Alert {
   type: AlertTypes,
