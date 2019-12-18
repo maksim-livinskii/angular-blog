@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {UserService} from "./services/user.service";
-import { UserPageComponent } from './user-page/user-page.component';
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthGuard} from "../auth/guards/auth.guard";
+import {UserPageComponent} from "./components/user-page/user-page.component";
 
 
 

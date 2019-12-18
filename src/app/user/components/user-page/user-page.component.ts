@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subject} from "rxjs";
-import {UserService} from "../services/user.service";
-import {AlertService} from "../../shared/services/alert.service";
-import {filter, map, takeUntil} from "rxjs/operators";
+import {takeUntil} from "rxjs/operators";
+import {UserService} from "../../services/user.service";
+import {AlertService} from "../../../shared/services/alert.service";
 
 @Component({
   selector: 'app-user-page',
@@ -15,7 +15,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   submitted = false;
   unsubscribe$ = new Subject();
 
-  constructor(private userService: UserService, private alert: AlertService) {
+  constructor(private userService: UserService, private alertService: AlertService) {
     this.form = new FormBuilder().group({
       id: [],
       email: [],
@@ -37,7 +37,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     console.log(this.form.getRawValue());
     this.userService.saveInformation(this.form.getRawValue())
       .subscribe(user=>{
-        this.alert.success('Информация сохранена');
+        this.alertService.success('Информация сохранена');
       });
   }
 

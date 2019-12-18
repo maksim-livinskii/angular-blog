@@ -97,6 +97,10 @@ export class AuthService {
     return !!localStorage.getItem('isAdmin');
   }
 
+  currentUserId(){
+    return localStorage.getItem('fb-user-id');
+  }
+
   private setToken(response: FbAuthResponse | null){
     if(response){
       const expData = new Date(new Date().getTime() + +response.expiresIn * 1000);

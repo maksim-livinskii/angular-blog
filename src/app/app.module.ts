@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import {PostModule} from "./post/post.module";
 import {AuthModule} from "./auth/auth.module";
 import {UserModule} from "./user/user.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {UserModule} from "./user/user.module";
     PostModule,
     AuthModule,
     UserModule,
+    NgbModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent]
